@@ -17,7 +17,7 @@
     using System;
     using System.Web.UI;
 
-    public class CustomMessageBody : Page
+    public class MessageBody : Page
     {
         private readonly IContactService _contactService;
 
@@ -25,13 +25,13 @@
 
         private readonly IExmCampaignService _exmCampaignService;
 
-        public CustomMessageBody() : 
+        public MessageBody() : 
             this((IContactService)ServiceLocator.ServiceProvider.GetService(typeof(IContactService)), (IMessageInfoFactory)ServiceLocator.ServiceProvider.GetService(typeof(IMessageInfoFactory)), (IExmCampaignService)ServiceLocator.ServiceProvider.GetService(typeof(IExmCampaignService)))
         {
 
         }
 
-        internal CustomMessageBody(IContactService contactService, IMessageInfoFactory messageInfoFactory, IExmCampaignService exmCampaignService)
+        internal MessageBody(IContactService contactService, IMessageInfoFactory messageInfoFactory, IExmCampaignService exmCampaignService)
         {
             Condition.Requires<IContactService>(contactService, "contactService").IsNotNull<IContactService>();
             Condition.Requires<IMessageInfoFactory>(messageInfoFactory, "messageInfoFactory").IsNotNull<IMessageInfoFactory>();
