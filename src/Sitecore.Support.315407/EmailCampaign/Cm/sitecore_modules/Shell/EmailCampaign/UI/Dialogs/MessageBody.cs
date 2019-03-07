@@ -17,7 +17,7 @@
     using System;
     using System.Web.UI;
 
-    public class MessageBody : Page
+    public class CustomMessageBody : Page
     {
         private readonly IContactService _contactService;
 
@@ -25,13 +25,13 @@
 
         private readonly IExmCampaignService _exmCampaignService;
 
-        public MessageBody() : 
+        public CustomMessageBody() : 
             this((IContactService)ServiceLocator.ServiceProvider.GetService(typeof(IContactService)), (IMessageInfoFactory)ServiceLocator.ServiceProvider.GetService(typeof(IMessageInfoFactory)), (IExmCampaignService)ServiceLocator.ServiceProvider.GetService(typeof(IExmCampaignService)))
         {
 
         }
 
-        internal MessageBody(IContactService contactService, IMessageInfoFactory messageInfoFactory, IExmCampaignService exmCampaignService)
+        internal CustomMessageBody(IContactService contactService, IMessageInfoFactory messageInfoFactory, IExmCampaignService exmCampaignService)
         {
             Condition.Requires<IContactService>(contactService, "contactService").IsNotNull<IContactService>();
             Condition.Requires<IMessageInfoFactory>(messageInfoFactory, "messageInfoFactory").IsNotNull<IMessageInfoFactory>();
@@ -90,6 +90,10 @@
                         "PhoneNumbers"
                     });
                     messageItem.PersonalizationRecipient = contact;
+#region Sitecore.Support.315407
+                    MailMessageItem mailMessage = messageItem as MailMessageItem;
+                    mailMessage.ContactIdentifier = contactIdentifier;
+#endregion
                 }
                 string queryString5 = WebUtil.GetQueryString("targetItem");
                 if (!string.IsNullOrEmpty(queryString5))
